@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+      <mat-selection-list [multiple]="false" *ngIf="attributes.length > 0">
+        <table mat-table [dataSource]="attributes" style="width: 100%">
+          <!-- Name Column -->
+          <ng-container matColumnDef="attrName">
+            <th mat-header-cell *matHeaderCellDef>Attribute Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.attrName }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="attrValue">
+            <th mat-header-cell *matHeaderCellDef>Attribute Value</th>
+            <td mat-cell *matCellDef="let element">{{ element.attrValue }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button class="btn btn-danger" (click)="deleteAttribute(element)">
+                Delete
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-selection-list>
+    </div>
+    <div class="col-md-5">
+      <form class="form-horizontal" role="form" [formGroup]="attrForm"  (ngSubmit)="onSubmit()">
+        <h2 class = "text-center">Create Attribute</h2>
+        <div class="form-group">
+            <label for="name" class="col-sm-3 control-label"> Attribute Name*</label>
+            <div class="col-sm-5">
+                <input type="text" id="attrName"  formControlName="attrName" class="form-control"  placeholder="Attribute Name" autofocus>
+            </div>
+        </div>
+        <div class="form-group">
+          <label for="attrValue" class="col-sm-3 control-label"> Value*</label>
+          <div class="col-sm-5">
+              <input type="text" id="attrValue" formControlName="attrValue" placeholder="Attribute value" class="form-control" autofocus>
+          </div>
+        </div>
+        <button type = "submit" [disabled]="attrForm.status!=='VALID'?true:false" (click)="createAttribute()" class=" btn btn-success  mx-auto ">Create</button>
+      </form>
+    </div>
+  </div>
+</div>

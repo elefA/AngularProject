@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <app-employee-list></app-employee-list>
+    </div>
+    <div class="col-md-7">
+      <app-employee-details
+        *ngIf="selectedEmployee; else infoText"
+        [employee]="selectedEmployee"
+      ></app-employee-details>
+      <!-- [recipe]="selectedRecipe" -->
+
+      <ng-template #infoText>
+        <div class="container"><p >Please select an Employee!</p></div>
+      </ng-template>
+    </div>
+  </div>
+
+
+</div>

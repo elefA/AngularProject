@@ -1,0 +1,12 @@
+
+
+<button class =" btn btn-success" (click) = "createEmpl()" >Create Employee</button>
+<mat-selection-list [multiple]="false" *ngIf="employees.length>0">
+    <app-employee-item
+      *ngFor="let emp of employees"
+      [employee]= emp>
+    </app-employee-item>
+</mat-selection-list>
+
+
+

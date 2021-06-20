@@ -1,0 +1,28 @@
+<div class="row header" >
+  <div class="col-md-5">
+      <button mat-fab color="warn"  routerLink="/home"  (click) = 'showMenu()'>
+        <mat-icon>home</mat-icon>
+      </button>
+  </div>
+  <div class="col-md-6">
+    <h2>CITE WEBSITE</h2>
+  </div>
+</div>
+
+<div *ngIf="menuBool" class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <button color="warn" mat-raised-button routerLink="/attr-component"  (click) = 'hideMenu()'  >Attributes</button>
+    </div>
+    <div class="col-md-6">
+      <button color="primary" mat-raised-button routerLink="/empl-component"  (click) = 'hideMenu()'  >
+        Employees
+      </button>
+    </div>
+  </div>
+  <div class="col-md-12">
+  </div>
+</div>
+
+<router-outlet *ngIf = "!menuBool"></router-outlet>
+

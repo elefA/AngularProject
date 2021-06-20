@@ -5,6 +5,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { v4 as uuid } from 'uuid';
+import { isBreakStatement } from 'typescript';
+import { EmployeeAttribute } from '../attributes/EmployeeAttribute';
+import { stringify } from '@angular/compiler/src/util';
 
 @Injectable({
   providedIn: 'root',
@@ -20,23 +23,40 @@ export class EmployeeService {
   //Class του employee με ακομα μια μεθοδο για να μετατρεπει ενα json row σε Employee object.
   adapter: Employee = new Employee();
 
-
-  checkForAttributesToAdd(attributes:Attribute[],employee:Employee){
-
+  checkForAttributesToAdd(
+    attributes: Attribute[],
+    emplAttributes: Attribute[]
+  ): Attribute[] {
+    let attributesToAdd = new Array<Attribute>();
+    let put = true;
+    for (var attr of attributes) {
+      put = true;
+      for (var empAttr of emplAttributes) {
+        if (attr.attrName === empAttr.attrName) {
+          put = false;
+          break;
+        }
+      }
+      if (put) {
+        attributesToAdd.push(attr);
+      }
+    }
+    return attributesToAdd;
   }
-  deleteEmpAttribute( attrId:string,employee:Employee){
-    this.http.delete(this.urlEmpAtr + '/' + attrId+'/'+employee.empId).subscribe({
-      next: (data) => {
-        console.log('Delete successful');
-        this.getAllEmployees().subscribe();
-        //αφου γραψω το attribute θελω να επιλεχτει ο employee μιας και τους φερνω παλι ολους ενω δεν χρειαζεται...
-        this.employeeSelected.emit(employee);
-      },
-      error: (error) => {
-        console.error('There was an error!', error.message);
-      },
-    });
-
+  deleteEmpAttribute(attrId: string, employee: Employee) {
+    this.http
+      .delete(this.urlEmpAtr + '/' + attrId + '/' + employee.empId)
+      .subscribe({
+        next: (data) => {
+          console.log('Delete successful');
+          this.getAllEmployees().subscribe();
+          //αφου γραψω το attribute θελω να επιλεχτει ο employee μιας και τους φερνω παλι ολους ενω δεν χρειαζεται...
+          this.employeeSelected.emit();
+        },
+        error: (error) => {
+          console.error('There was an error!', error.message);
+        },
+      });
   }
   //εδω ειναι το list που μπορουν ολα τα components να κανουν subscribe και να εχουν μια
   //up to date λιστα των Employees της βασης
@@ -81,7 +101,19 @@ export class EmployeeService {
         },
       });
   }
-
+  postEmpAttr(empAttr:EmployeeAttribute,employee:Employee) {
+    this.http.post(this.urlEmpAtr,
+      JSON.stringify(empAttr), this.httpOptions).subscribe({
+        next:(data)=>{
+          this.getAllEmployees().subscribe();
+          employee.employeeAttributes.push({
+            empattrAttributeId: empAttr.empattrAttributeId,
+            empattrAttribute: null
+        });
+        this.employeeSelected.emit();
+        }
+      });
+  }
   createEmployee(employee: Employee) {
     employee.empId = uuid(); //generate a new uid.
     return this.http

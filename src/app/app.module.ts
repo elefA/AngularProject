@@ -22,6 +22,7 @@ import { AttributesListComponent } from './attributes/attributes-list/attributes
 import { AttributesDetailComponent } from './attributes/attribute-detail/attribute-detail.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddEmpattrComponent } from './employee/employee-details/add-empattr/add-empattr.component';
+import { MapComponent } from './map/map.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { AddEmpattrComponent } from './employee/employee-details/add-empattr/add
     AttributesListComponent,
     AttributesDetailComponent,
     AddEmpattrComponent,
+    MapComponent,
 
   ],
   imports: [

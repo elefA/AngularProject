@@ -23,6 +23,8 @@ import { AttributesDetailComponent } from './attributes/attribute-detail/attribu
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddEmpattrComponent } from './employee/employee-details/add-empattr/add-empattr.component';
 import { MapComponent } from './map/map.component';
+import { MapModalComponent } from './map/map-modal/map-modal.component';
+import { AgmCoreModule } from '@agm/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,14 +37,20 @@ import { MapComponent } from './map/map.component';
     AttributesDetailComponent,
     AddEmpattrComponent,
     MapComponent,
+    MapModalComponent,
+
 
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+      apiKey:''
+    }),
     RouterModule.forRoot([
       {path: 'empl-component', component: EmployeeComponent},
       {path: 'attr-component', component: AttributesComponent},
+      {path: 'map-component', component: MapComponent}
 
     ]),
     AppRoutingModule,

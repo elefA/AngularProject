@@ -1,1 +1,78 @@
-<p>map works!</p>
+<div class="container">
+  <div class="row" *ngIf="showAttributes">
+    <div class="col-md-7">
+      <h2>Select attribute to filter employees</h2>
+      <mat-selection-list [multiple]="false" *ngIf="attributes.length > 0">
+        <table mat-table [dataSource]="attributes" style="width: 100%">
+          <!-- Name Column -->
+          <ng-container matColumnDef="attrName">
+            <th mat-header-cell *matHeaderCellDef>Attribute Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.attrName }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="attrValue">
+            <th mat-header-cell *matHeaderCellDef>Attribute Value</th>
+            <td mat-cell *matCellDef="let element">{{ element.attrValue }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button class="btn btn-success" (click)="selectAttribute(element)">
+                Select
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-selection-list>
+    </div>
+  </div>
+  <div class="row" *ngIf="!showAttributes && empToShow.length>0; else noEmployees">
+
+    <div class="col-md-7">
+
+      <h2>Employees</h2>
+      <mat-selection-list [multiple]="false" *ngIf="attributes.length > 0">
+        <table mat-table [dataSource]="empToShow" style="width: 100%">
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Employee Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.empName }}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef>Employee Address`</th>
+            <td mat-cell *matCellDef="let element">{{ element.empAddress }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="showMap">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button class="btn btn-success" (click)="showMap(element)">
+                Show Map
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedEmplColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedEmplColumns"></tr>
+        </table>
+        <button class="btn-primary btn"  (click)="cancelFilter()"> Cancel Filter</button>
+      </mat-selection-list>
+    </div>
+  </div>
+  <ng-template   #noEmployees>
+
+    <div *ngIf="!showAttributes && empToShow.length===0">
+       No employee has this attribute
+       <button class="btn-primary btn" style = "margin-left :12px" (click)="cancelFilter()"> Cancel Filter</button>
+    </div>
+
+  </ng-template>
+</div>
+

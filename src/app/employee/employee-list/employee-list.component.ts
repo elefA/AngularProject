@@ -9,9 +9,9 @@ import { Router } from "@angular/router";
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-  employee : Employee = new Employee();
-  employees : Employee[] = [];
-  constructor(private backEnd : EmployeeService,private router:Router) {
+  employee! : Employee;
+  employees! : Employee[] ;
+  constructor(private backEnd : EmployeeService) {
     backEnd.getEmployeesInstance().subscribe(data=>this.employees = data);
     backEnd.getAllEmployees().subscribe();
   }

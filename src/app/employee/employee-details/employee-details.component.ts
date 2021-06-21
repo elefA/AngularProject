@@ -57,7 +57,7 @@ export class EmployeeDetailsComponent implements OnInit {
         ref.result.then((result) => {
           console.log(result);
           console.log('closed');
-          this.empAttrTable.renderRows();
+
         })
         .catch((result) => {
           console.log(result);
@@ -111,7 +111,6 @@ export class EmployeeDetailsComponent implements OnInit {
         }
       }
     }
-    this.empAttrTable.renderRows();
   }
 
   passEmployeeToForm() {
